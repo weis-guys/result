@@ -1,4 +1,52 @@
-# @weis-guys/result
+<div align='center'>
+    <h1>@weis-guys/result</h1>
+</div>
+
+<div align='center'>
+    <a href='https://github.com/JacobWeisenburger' rel='nofollow'>
+        <img alt='Created by Jacob Weisenburger'
+            src='https://img.shields.io/badge/created%20by-Jacob%20Weisenburger-274D82.svg'>
+    </a>
+    <a href='https://github.com/weis-guys/result/stargazers' rel='nofollow'>
+        <img alt='stars' src='https://img.shields.io/github/stars/weis-guys/result?color=blue'>
+    </a>
+</div>
+
+<div align='center'>
+    <a href='https://www.npmjs.com/package/@weis-guys/result' rel='nofollow'>
+        <img alt='npm' src='https://img.shields.io/npm/v/@weis-guys/result?color=blue'>
+    </a>
+    <a href='https://www.npmjs.com/package/@weis-guys/result' rel='nofollow'>
+        <img alt='downloads' src='https://img.shields.io/npm/dw/@weis-guys/result?color=blue'>
+    </a>
+</div>
+
+<div align="center">
+    <a href="https://github.com/weis-guys/result">Docs</a>
+    <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+    <a href="https://github.com/weis-guys/result">github</a>
+    <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+    <a href="https://www.npmjs.com/package/@weis-guys/result">npm</a>
+</div>
+
+<!-- Dist Readme Stops Here -->
+
+<br />
+
+## Contribute
+
+Always open to ideas. Positive or negative, all are welcome. Feel free to contribute an [issue](https://github.com/weis-guys/result/issues) or [PR](https://github.com/weis-guys/result/pulls).
+
+## Installation
+
+```sh
+npm install @weis-guys/result
+yarn add @weis-guys/result
+pnpm add @weis-guys/result
+bun add @weis-guys/result
+```
+
+## Getting Started
 
 ```ts
 import { Result } from '@weis-guys/result'
@@ -71,4 +119,5 @@ if ( result.success ) {
 ```
 
 ## TODO
-- [ ] make reduced readme for npm
+- Auto publish to npm
+    - GitHub Actions ?

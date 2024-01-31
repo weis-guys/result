@@ -27,48 +27,54 @@ await Promise.resolve()
         } )
     )
 
-    .then( async () => {
-        await rm( dist, { recursive: true } )
-            .then( () => console.log( 'dist: deleted' ) )
-            .catch( logError( { dist } ) )
-    } )
+    // .then( async () => {
+    //     await rm( dist, { recursive: true } )
+    //         .then( () => console.log( 'dist: deleted' ) )
+    //         .catch( logError( { dist } ) )
+    // } )
 
     .then( async () => {
         const section = 'Bun.build'
         const config: BuildConfig = {
-            entrypoints: [ './lib.ts' ],
-            root,
-            outdir: dist,
+            entrypoints: [ './src/lib.ts' ],
             format: 'esm',
             minify: true,
-            sourcemap: 'external',
+            sourcemap: 'inline',
             target: 'node',
             plugins: [
                 dts()
             ],
         }
         await Bun.build( config )
+            .then( buildResult => Promise.all(
+                buildResult.outputs.map( res => Bun.write( Path.join( dist, res.path ), res ) )
+            ) )
             .then( () => console.log( 'Bun.build: ran' ) )
             .catch( logError( { section, config } ) )
     } )
 
     .then( async () => {
-        const section = 'package.json'
+        const section = 'Reduced package.json: written'
         const distPath = Path.join( dist, 'package.json' )
         const { scripts, devDependencies, ...reduced } = packageJSON
 
         await Bun.write( distPath, JSON.stringify( reduced, null, 4 ) )
-            .then( () => console.log( 'package: copied' ) )
+            .then( () => console.log( section ) )
             .catch( logError( { section, distPath, reduced } ) )
     } )
 
     .then( async () => {
-        const section = 'README'
+        const section = 'Reduced README: written'
         const srcPath = Path.join( root, 'README.md' )
         const distPath = Path.join( dist, 'README.md' )
-        await copyFile( srcPath, distPath )
-            .then( () => console.log( 'README: copied' ) )
-            .catch( logError( { section, srcPath, distPath } ) )
+        const contents = await Bun.file( srcPath ).text()
+        const newContents = contents
+            .split( '<!-- Dist Readme Stops Here -->' )[ 0 ]
+            .trim()
+
+        await Bun.write( distPath, newContents )
+            .then( () => console.log( section ) )
+            .catch( logError( { section, distPath, contents } ) )
     } )
 
     .then( async () => {
