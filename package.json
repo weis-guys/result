@@ -1,0 +1,30 @@
+{
+    "name": "@weis-guys/result",
+    "version": "0.0.5",
+    "main": "lib.js",
+    "type": "module",
+    "author": "Jacob Weisenburger",
+    "license": "MIT",
+    "npm": "https://www.npmjs.com/package/@weis-guys/result",
+    "repository": "https://github.com/weis-guys/result",
+    "homepage": "https://github.com/weis-guys/result",
+    "keywords": [
+        "typescript"
+    ],
+    "scripts": {
+        "test": "bun test",
+        "test.watch": "bun test --watch",
+        "docs.examples": "clear && bun run --watch docs/examples.ts",
+        "build": "clear && bun run scripts/build.ts",
+        "build.watch": "clear && bun --watch run scripts/build.ts",
+        "publish": "clear && bun run scripts/publish.ts",
+        "publish.npm": "npm publish ./dist",
+        "publish.watch": "clear && bun --watch run scripts/publish.ts",
+        "cmd": "cmd.exe /c start cmd /k wsl --cd ~/software/weis-guys/result"
+    },
+    "devDependencies": {
+        "@types/bun": "latest",
+        "@weis-guys/result": "^0.0.4",
+        "bun-plugin-dts": "^0.2.1"
+    }
+}
