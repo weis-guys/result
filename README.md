@@ -69,3 +69,6 @@ if ( result.success ) {
     // result.error: "some kind of error"
 }
 ```
+
+## TODO
+- [] make reduced readme for npm
