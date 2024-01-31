@@ -71,4 +71,4 @@ if ( result.success ) {
 ```
 
 ## TODO
-- [] make reduced readme for npm
+- [ ] make reduced readme for npm
