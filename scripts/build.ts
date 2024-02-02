@@ -1,13 +1,10 @@
 import type { BuildConfig } from 'bun'
 import dts from 'bun-plugin-dts'
-import { copyFile, cp, rm } from 'node:fs/promises'
+import { copyFile, rm } from 'node:fs/promises'
 import * as Path from 'node:path'
 import packageJSON from '../package.json'
 
 // https://bun.sh/docs/bundler
-// https://www.npmjs.com/~cakeboss777?activeTab=packages
-
-// https://github.com/wobsoriano/bun-lib-starter/tree/main
 // https://github.com/wobsoriano/bun-plugin-dts
 
 const logError = ( ctx?: object ) => ( { message }: Error ) => {
@@ -27,11 +24,11 @@ await Promise.resolve()
         } )
     )
 
-    // .then( async () => {
-    //     await rm( dist, { recursive: true } )
-    //         .then( () => console.log( 'dist: deleted' ) )
-    //         .catch( logError( { dist } ) )
-    // } )
+    .then( async () => {
+        await rm( dist, { recursive: true } )
+            .then( () => console.log( 'dist: deleted' ) )
+            .catch( logError( { dist } ) )
+    } )
 
     .then( async () => {
         const section = 'Bun.build'

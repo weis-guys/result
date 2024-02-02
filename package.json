@@ -18,7 +18,6 @@
         "build": "clear && bun run scripts/build.ts",
         "build.watch": "clear && bun --watch run scripts/build.ts",
         "publish": "clear && bun run scripts/publish.ts",
-        "publish.npm": "npm publish ./dist",
         "publish.watch": "clear && bun --watch run scripts/publish.ts",
         "cmd": "cmd.exe /c start cmd /k wsl --cd ~/software/weis-guys/result"
     },

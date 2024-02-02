@@ -22,7 +22,7 @@
 </div>
 
 <div align="center">
-    <a href="https://github.com/weis-guys/result">Docs</a>
+    <a href="https://github.com/weis-guys/result#weis-guysresult">Docs</a>
     <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
     <a href="https://github.com/weis-guys/result">github</a>
     <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
