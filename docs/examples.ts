@@ -1,35 +1,44 @@
-// import { Result } from '@weis-guys/result'
+import Result from '@weis-guys/result'
 
-// const ok = Result.ok( 'good value' )
-// // { type: 'ok', value: 'good value' }
+const okResult = Result.ok( 'good value' )
+// { success: true, value: "good value"  }
 
-// const warning = Result.warning( 'some kind of warning' )
-// // { type: 'warning', value: 'some kind of warning' }
+const warningResult = Result.okWithWarning( 'good value', 'some kind of warning' )
+// { success: true, value: "good value", warning: "some kind of warning" }
 
-// const error = Result.error( 'some kind of error' )
-// // { type: 'error', value: 'some kind of error' }
+const errorResult = Result.error( 'some kind of error' )
+// { success: false, error: "some kind of error" }
 
-// /**
-//  * this function could return a value or an error
-//  */
-// function someFn () {
-//     const items = [ ok, warning, error ]
-//     return items[ Math.floor( Math.random() * items.length ) ]
-// }
+/**
+ * this function could return a value, an error, or a value with a warning
+ */
+function someFn () {
+    const items = [ okResult, warningResult, errorResult ]
+    return items[ Math.floor( Math.random() * items.length ) ]
+}
 
-// const result = someFn()
+const result = someFn()
+console.log( { result } )
 
-// switch ( result.type ) {
-//     case 'ok':
-//         console.log( result.value )
-//         // 'good value'
-//         break
-//     case 'warning':
-//         console.warn( result.value )
-//         // 'some kind of warning'
-//         break
-//     case 'error':
-//         console.error( result.value )
-//         // 'some kind of error'
-//         break
-// }
+if ( result.success ) {
+    console.log( result.value )
+    // 'good value'
+
+    result.warning && console.warn( result.warning )
+    // 'some kind of warning'
+} else {
+    console.error( result.error )
+    // 'some kind of error'
+}
+
+const value = Result.getValue( result )
+console.log( value )
+// 'good value' | undefined
+
+const warning = Result.getWarning( result )
+console.log( warning )
+// 'some kind of warning' | undefined
+
+const error = Result.getError( result )
+console.log( error )
+// 'some kind of error' | undefined

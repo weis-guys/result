@@ -39,7 +39,11 @@ await Promise.resolve()
             sourcemap: 'inline',
             target: 'node',
             plugins: [
-                dts()
+                dts( {
+                    output: {
+                        noBanner: true,
+                    }
+                } )
             ],
         }
         await Bun.build( config )

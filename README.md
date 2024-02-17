@@ -49,73 +49,50 @@ bun add @weis-guys/result
 ## Getting Started
 
 ```ts
-import { Result } from '@weis-guys/result'
+import Result from '@weis-guys/result'
 
+const okResult = Result.ok( 'good value' )
+// { success: true, value: "good value"  }
 
-const happy = Result.ok( 'good value' )
-console.log( happy )
-// { success: true, value: "good value" }
+const warningResult = Result.okWithWarning( 'good value', 'some kind of warning' )
+// { success: true, value: "good value", warning: "some kind of warning" }
 
-
-const sad = Result.err( 'some kind of error' )
-console.log( sad )
+const errorResult = Result.error( 'some kind of error' )
 // { success: false, error: "some kind of error" }
 
-
 /**
- * this function could return a value or an error
+ * this function could return a value, an error, or a value with a warning
  */
 function someFn () {
-    return Math.random() > 0.5 ? happy : sad
+    const items = [ okResult, warningResult, errorResult ]
+    return items[ Math.floor( Math.random() * items.length ) ]
 }
-
 
 const result = someFn()
+console.log( { result } )
 
-Result.match( result )( {
-    ok: value => console.log( value ), // do something with the value
-    err: error => console.error( error ), // do something with the error
-} )
-
-const valueOrError = Result.match( result )( {
-    // optionally perform a typesafe transformation to the value before returning it
-    ok: value => value,
-
-    // optionally perform a typesafe transformation to the error before returning it
-    err: error => error,
-} )
-
-console.log( 'valueOrError:', valueOrError )
-// valueOrError: "good value" | "some kind of error"
-
-type ValueOrError = typeof valueOrError
-// type ValueOrError = "good value" | "some kind of error"
-
-
-const justValue = Result.match( result )( { ok: value => value } )
-console.log( 'justValue:', justValue )
-// justValue: "good value" | undefined
-
-type JustValue = typeof justValue
-// type JustValue = "good value" | undefined
-
-
-const justError = Result.match( result )( { err: error => error } )
-console.log( 'justError:', justError )
-// justError: "some kind of error" | undefined
-
-type JustError = typeof justError
-// type JustError = "some kind of error" | undefined
-
-
-// you can also handle both cases with a normal if/else statement
 if ( result.success ) {
-    console.log( 'result.value:', result.value )
-    // result.value: "good value"
+    console.log( result.value )
+    // 'good value'
+
+    result.warning && console.warn( result.warning )
+    // 'some kind of warning'
 } else {
-    console.log( 'result.error', result.error )
-    // result.error: "some kind of error"
+    console.error( result.error )
+    // 'some kind of error'
 }
+
+const value = Result.getValue( result )
+console.log( value )
+// 'good value' | undefined
+
+const warning = Result.getWarning( result )
+console.log( warning )
+// 'some kind of warning' | undefined
+
+const error = Result.getError( result )
+console.log( error )
+// 'some kind of error' | undefined
 ```
 
 ## TODO
