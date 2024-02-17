@@ -33,7 +33,7 @@ await Promise.resolve()
     .then( async () => {
         const section = 'Bun.build'
         const config: BuildConfig = {
-            entrypoints: [ './src/lib.ts' ],
+            entrypoints: [ './src/index.ts' ],
             format: 'esm',
             minify: true,
             sourcemap: 'inline',
