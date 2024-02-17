@@ -20,6 +20,7 @@
     },
     "devDependencies": {
         "@types/bun": "latest",
-        "bun-plugin-dts": "^0.2.1"
+        "bun-plugin-dts": "^0.2.1",
+        "@weis-guys/result": "*"
     }
 }
