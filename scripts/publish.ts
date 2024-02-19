@@ -12,7 +12,8 @@ const logError = ( ctx?: object ) => ( { message }: Error ) => {
 
 const root = Path.join( import.meta.dir, '..' )
 const dist = Path.join( root, 'dist' )
-const publishFromDir = Path.join( '/mnt/c/software/temp/weis-guys/result', 'dist' )
+const tempSubDir = root.split( 'software' )[ 1 ]
+const publishFromDir = Path.join( '/mnt/c/software/temp', tempSubDir, 'dist' )
 
 await Promise.resolve()
     .then( () => console.log( 'Publishing...' ) )
