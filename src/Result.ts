@@ -85,7 +85,7 @@ export module Result {
         | 'warning'
         | 'error'
     /**
-     * return only the value of a perticualr property if it exists
+     * return only the value of a particular property if it exists
      */
     export const get = ( key: PropKeys ) => <Result extends Any> ( result: Result ) => {
         return ( result as Record<string, any> )[ key ]
