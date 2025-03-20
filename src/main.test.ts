@@ -1,61 +1,148 @@
-import { expect, test } from 'bun:test'
-import Result from './index'
+import { describe, expect, test } from 'bun:test'
+import { Result } from './index'
 
-const goodValue = 'good value'
-const warning = 'some kind of warning'
-const error = 'some kind of error'
+const goodData = 'good data'
+const someWarning = 'some kind of warning'
+const someError = 'some kind of error'
 
-test( 'Result.ok', () => {
-    const result = Result.ok( goodValue )
-    expect( result.success ).toBe( true )
-    expect( result.type ).toBe( 'ok' )
-    expect( result.value ).toBe( goodValue )
+describe( 'Successful Result', () => {
+    test( 'Result.ok()', () => {
+        const result = Result.ok()
+        const { data, error, warning } = result
 
-    expect( Result.get( 'value' )( result ) ).toBe( goodValue )
-    expect( Result.get( 'warning' )( result ) ).toBe( undefined )
-    expect( Result.get( 'error' )( result ) ).toBe( undefined )
+        expect( data ).toMatchObject( {} )
+        expect( !!data ).toBe( true )
+        expect( 'data' in result ).toBe( true )
+
+        expect( error ).toBe( undefined )
+        expect( !!error ).toBe( false )
+        expect( 'error' in result ).toBe( false )
+
+        expect( warning ).toBe( undefined )
+        expect( !!warning ).toBe( false )
+        expect( 'warning' in result ).toBe( false )
+    } )
+
+    test( 'Result.ok( goodData )', () => {
+        const result = Result.ok( goodData )
+        const { data, error, warning } = result
+
+        expect( data ).toBe( goodData )
+        expect( !!data ).toBe( true )
+        expect( 'data' in result ).toBe( true )
+
+        expect( error ).toBe( undefined )
+        expect( !!error ).toBe( false )
+        expect( 'error' in result ).toBe( false )
+
+        expect( warning ).toBe( undefined )
+        expect( !!warning ).toBe( false )
+        expect( 'warning' in result ).toBe( false )
+    } )
+
+    test( 'Result( { data: goodData } )', () => {
+        const result = Result( { data: goodData } )
+        const { data, error, warning } = result
+
+        expect( data ).toBe( goodData )
+        expect( !!data ).toBe( true )
+        expect( 'data' in result ).toBe( true )
+
+        expect( error ).toBe( undefined )
+        expect( !!error ).toBe( false )
+        expect( 'error' in result ).toBe( false )
+
+        expect( warning ).toBe( undefined )
+        expect( !!warning ).toBe( false )
+        expect( 'warning' in result ).toBe( false )
+    } )
 } )
 
-test( 'Result.ok with no value', () => {
-    const result = Result.ok()
-    expect( result.success ).toBe( true )
-    expect( result.type ).toBe( 'ok' )
-    expect( result.value ).toBe( undefined )
+describe( 'Unsuccessful Result', () => {
+    test( 'Result.err( someError )', () => {
+        const result = Result.err( someError )
+        const { data, error, warning } = result
 
-    expect( Result.get( 'value' )( result ) ).toBe( undefined )
-    expect( Result.get( 'warning' )( result ) ).toBe( undefined )
-    expect( Result.get( 'error' )( result ) ).toBe( undefined )
+        expect( data ).toBe( undefined )
+        expect( !!data ).toBe( false )
+        expect( 'data' in result ).toBe( false )
+
+        expect( error ).toBe( someError )
+        expect( !!error ).toBe( true )
+        expect( 'error' in result ).toBe( true )
+
+        expect( warning ).toBe( undefined )
+        expect( !!warning ).toBe( false )
+        expect( 'warning' in result ).toBe( false )
+    } )
+
+    test( 'Result( { data: goodData, error: someError } )', () => {
+        const result = Result( { data: goodData, error: someError } )
+        const { data, error, warning } = result
+
+        expect( data ).toBe( goodData )
+        expect( !!data ).toBe( true )
+        expect( 'data' in result ).toBe( true )
+
+        expect( error ).toBe( someError )
+        expect( !!error ).toBe( true )
+        expect( 'error' in result ).toBe( true )
+
+        expect( warning ).toBe( undefined )
+        expect( !!warning ).toBe( false )
+        expect( 'warning' in result ).toBe( false )
+    } )
 } )
 
-test( 'Result.warn', () => {
-    const result = Result.warn( warning )
-    expect( result.success ).toBe( true )
-    expect( result.type ).toBe( 'warning' )
-    expect( result.warning ).toBe( warning )
+describe( 'Warning Result', () => {
+    test( 'Result.warn( someWarning )', () => {
+        const result = Result.warn( someWarning )
+        const { data, error, warning } = result
 
-    expect( Result.get( 'value' )( result ) ).toBe( undefined )
-    expect( Result.get( 'warning' )( result ) ).toBe( warning )
-    expect( Result.get( 'error' )( result ) ).toBe( undefined )
+        expect( data ).toBe( undefined )
+        expect( !!data ).toBe( false )
+        expect( 'data' in result ).toBe( false )
+
+        expect( error ).toBe( undefined )
+        expect( !!error ).toBe( false )
+        expect( 'error' in result ).toBe( false )
+
+        expect( warning ).toBe( someWarning )
+        expect( !!warning ).toBe( true )
+        expect( 'warning' in result ).toBe( true )
+    } )
+
+    test( 'Result( { data: goodData, warning: someWarning } )', () => {
+        const result = Result( { data: goodData, warning: someWarning } )
+        const { data, error, warning } = result
+
+        expect( data ).toBe( goodData )
+        expect( !!data ).toBe( true )
+        expect( 'data' in result ).toBe( true )
+
+        expect( error ).toBe( undefined )
+        expect( !!error ).toBe( false )
+        expect( 'error' in result ).toBe( false )
+
+        expect( warning ).toBe( someWarning )
+        expect( !!warning ).toBe( true )
+        expect( 'warning' in result ).toBe( true )
+    } )
 } )
 
-test( 'Result.valueAndWarning', () => {
-    const result = Result.valueAndWarning( goodValue, warning )
-    expect( result.success ).toBe( true )
-    expect( result.type ).toBe( 'valueAndWarning' )
-    expect( result.value ).toBe( goodValue )
-    expect( result.warning ).toBe( warning )
+test( 'Result( { data: goodData, error: someError, warning: someWarning } )', () => {
+    const result = Result( { data: goodData, error: someError, warning: someWarning } )
+    const { data, error, warning } = result
 
-    expect( Result.get( 'value' )( result ) ).toBe( goodValue )
-    expect( Result.get( 'warning' )( result ) ).toBe( warning )
-    expect( Result.get( 'error' )( result ) ).toBe( undefined )
-} )
+    expect( data ).toBe( goodData )
+    expect( !!data ).toBe( true )
+    expect( 'data' in result ).toBe( true )
 
-test( 'Result.error', () => {
-    const result = Result.error( error )
-    expect( result.success ).toBe( false )
-    expect( result.type ).toBe( 'error' )
+    expect( error ).toBe( someError )
+    expect( !!error ).toBe( true )
+    expect( 'error' in result ).toBe( true )
 
-    expect( Result.get( 'value' )( result ) ).toBe( undefined )
-    expect( Result.get( 'warning' )( result ) ).toBe( undefined )
-    expect( Result.get( 'error' )( result ) ).toBe( error )
+    expect( warning ).toBe( someWarning )
+    expect( !!warning ).toBe( true )
+    expect( 'warning' in result ).toBe( true )
 } )

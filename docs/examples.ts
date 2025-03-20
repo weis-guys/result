@@ -1,44 +1,55 @@
-import Result from '@weis-guys/result'
+import { Result } from '@weis-guys/result'
 
-const okResult = Result.ok( 'good value' )
-// { success: true, value: "good value"  }
+console.log( Result.ok( 'good data' ) )
+// { data: "good data" }
 
-const warningResult = Result.okWithWarning( 'good value', 'some kind of warning' )
-// { success: true, value: "good value", warning: "some kind of warning" }
+console.log( Result( { data: 'good data' } ) )
+// { data: "good data" }
 
-const errorResult = Result.error( 'some kind of error' )
-// { success: false, error: "some kind of error" }
+console.log( Result.ok() )
+// { data: {} }
+
+console.log( Result.err( 'some kind of error' ) )
+// { error: "some kind of error" }
+
+console.log( Result.warn( 'some kind of warning' ) )
+// { warning: "some kind of warning" }
+
+console.log( Result( { data: 'good data', warning: 'some kind of warning' } ) )
+// { data: "good data", warning: "some kind of warning" }
+
+console.log( Result( { data: 'good data', error: 'some kind of error' } ) )
+// { data: "good data", error: "some kind of error" }
+
+console.log( Result( { data: 'good data', error: 'some kind of error', warning: 'some kind of warning' } ) )
+// { data: "good data", error: "some kind of error", warning: "some kind of warning" }
 
 /**
- * this function could return a value, an error, or a value with a warning
+ * this function returns some kind of result that isn't known until runtime
  */
 function someFn () {
-    const items = [ okResult, warningResult, errorResult ]
+    const items = [
+        Result.ok( 'good data' ),
+        Result.err( 'some kind of error' ),
+        Result.warn( 'some kind of warning' ),
+        Result( { data: 'good data', warning: 'some kind of warning' } ),
+    ]
     return items[ Math.floor( Math.random() * items.length ) ]
 }
 
-const result = someFn()
-console.log( { result } )
+const { data, error, warning } = someFn()
 
-if ( result.success ) {
-    console.log( result.value )
-    // 'good value'
-
-    result.warning && console.warn( result.warning )
-    // 'some kind of warning'
-} else {
-    console.error( result.error )
-    // 'some kind of error'
+if ( data ) {
+    console.log( data )
+    // 'good data'
 }
 
-const value = Result.getValue( result )
-console.log( value )
-// 'good value' | undefined
+if ( warning ) {
+    console.log( warning )
+    // 'some kind of warning'
+}
 
-const warning = Result.getWarning( result )
-console.log( warning )
-// 'some kind of warning' | undefined
-
-const error = Result.getError( result )
-console.log( error )
-// 'some kind of error' | undefined
+if ( error ) {
+    console.log( error )
+    // 'some kind of error'
+}
