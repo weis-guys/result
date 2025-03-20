@@ -41,9 +41,18 @@ Always open to ideas. Positive or negative, all are welcome. Feel free to contri
 
 ```sh
 npm install @weis-guys/result
+```
+
+```sh
 yarn add @weis-guys/result
-pnpm add @weis-guys/result
+```
+
+```sh
 bun add @weis-guys/result
+```
+
+```sh
+pnpm add @weis-guys/result
 ```
 
 ## Getting Started
