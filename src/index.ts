@@ -1,4 +1,4 @@
-type Result<Data = undefined, Error = undefined, Warning = undefined> = {
+export type Result<Data = undefined, Error = undefined, Warning = undefined> = {
     data: Data
     error: Error
     warning: Warning
