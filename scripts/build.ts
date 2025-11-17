@@ -35,8 +35,8 @@ await Promise.resolve()
         const config: BuildConfig = {
             entrypoints: [ './src/index.ts' ],
             format: 'esm',
-            // minify: true,
-            // sourcemap: 'inline',
+            minify: true,
+            sourcemap: 'external',
             plugins: [
                 dts( {
                     output: {
