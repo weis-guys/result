@@ -1,6 +1,6 @@
 {
     "name": "@weis-guys/result",
-    "version": "1.0.2",
+    "version": "1.0.4",
     "main": "index.js",
     "type": "module",
     "author": "Jacob Weisenburger",
@@ -14,9 +14,12 @@
     "scripts": {
         "test": "bun test --watch",
         "examples": "clear && bun run --watch docs/examples.ts",
-        "build": "clear && bun --watch run scripts/build.ts",
-        "publish": "clear && bun run scripts/publish.ts",
-        "cmd": "cmd.exe /c start cmd /k wsl --cd ~/software/weis-guys/result"
+        "build": "cls && bun run scripts/build.ts",
+        "build.watch": "cls && bun --watch run scripts/build.ts",
+        "build.cmd": "start cmd /k npm run build",
+        "pub": "clear && bun run scripts/publish.ts",
+        "build.pub": "npm run build && npm run pub",
+        "cmd": "start cmd /k"
     },
     "devDependencies": {
         "@types/bun": "latest",

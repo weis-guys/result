@@ -1,4 +1,4 @@
-import type { BuildConfig } from 'bun'
+import { $, type BuildConfig } from 'bun'
 import dts from 'bun-plugin-dts'
 import { copyFile, rm } from 'node:fs/promises'
 import * as Path from 'node:path'
@@ -36,8 +36,7 @@ await Promise.resolve()
             entrypoints: [ './src/index.ts' ],
             format: 'esm',
             minify: true,
-            sourcemap: 'inline',
-            target: 'node',
+            sourcemap: 'external',
             plugins: [
                 dts( {
                     output: {
@@ -55,9 +54,9 @@ await Promise.resolve()
     } )
 
     .then( async () => {
-        const section = 'Reduced package.json: written'
-        const distPath = Path.join( dist, 'package.json' )
         const { scripts, devDependencies, ...reduced } = packageJSON
+        const section = `Reduced package.json: written: ${ reduced.version }`
+        const distPath = Path.join( dist, 'package.json' )
 
         await Bun.write( distPath, JSON.stringify( reduced, null, 4 ) )
             .then( () => console.log( section ) )
@@ -84,6 +83,15 @@ await Promise.resolve()
         const distPath = Path.join( dist, 'LICENSE' )
         await copyFile( srcPath, distPath )
             .then( () => console.log( 'LICENSE: copied' ) )
+            .catch( logError( { section, srcPath, distPath } ) )
+    } )
+
+    .then( async () => {
+        const section = 'src/index.ts'
+        const srcPath = Path.join( root, 'src/index.ts' )
+        const distPath = Path.join( dist, 'index.ts' )
+        await copyFile( srcPath, distPath )
+            .then( () => console.log( 'src/index.ts: copied' ) )
             .catch( logError( { section, srcPath, distPath } ) )
     } )
 
